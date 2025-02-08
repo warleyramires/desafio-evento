@@ -93,4 +93,28 @@ public class EventoService {
 
     }
 
+    public void deletarEvento(Long eventoId, Long usuarioId){
+        try{
+           Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioId);
+           if(usuarioOptional.isEmpty()){
+               throw new RuntimeException("Usuário não encontrado");
+           }
+           Usuario usuario = usuarioOptional.get();
+
+           Optional<Evento> eventoOptional = eventoRepository.findById(eventoId);
+           if(eventoOptional.isEmpty()){
+               throw new RuntimeException("Evento não encontrado");
+           }
+
+           Evento evento =eventoOptional.get();
+           if(!evento.getUsuario().equals(usuario)){
+               throw new RuntimeException("Você não tem permissão para excluir este evento");
+           }
+           eventoRepository.deleteById(eventoId);
+
+        }catch (Exception e){
+            throw new RuntimeException("Erro ao deletar evento: " + e.getMessage());
+        }
+    }
+
 }

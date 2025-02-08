@@ -45,4 +45,14 @@ public class EventoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/{eventoId}/usuario/{usuarioId}")
+    public ResponseEntity<?> deleteEvento(@PathVariable Long eventoId, @PathVariable Long usuarioId){
+        try{
+            eventoService.deletarEvento(eventoId, usuarioId);
+            return ResponseEntity.status(HttpStatus.OK).body("");
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }
