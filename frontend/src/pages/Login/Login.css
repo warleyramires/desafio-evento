@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: white;
+    background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     width: 350px;
@@ -22,6 +22,7 @@
 .image-logo {
     width: 60%;
     margin-bottom: 20px;
+    background-color: white;
 }
 
 .formulario {
@@ -30,17 +31,20 @@
     width: 100%;
     gap: 15px;
     color: #719cd2;
+    background-color: white;
 }
 
 .formulario label {
     font-size: 16px;
     font-weight: bold;
+    background-color: white;
 }
 
 .input-email,
 .input-password {
     display: flex;
     flex-direction: column;
+    
 }
 
 .formulario input {
@@ -50,12 +54,14 @@
     border-radius: 8px;
     color: #333;
     outline: none;
+    background-color: white;
 }
 
 .buttons {
     display: flex;
     gap: 10px;
     justify-content: center;
+    background-color: white;
 }
 
 .buttons button {
@@ -71,3 +77,10 @@
 .buttons button:hover {
     background-color: #5a85b5;
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+  }
