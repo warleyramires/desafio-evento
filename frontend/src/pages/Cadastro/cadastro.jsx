@@ -2,14 +2,30 @@
 import { useState } from "react";
 import Logo from "../../assets/image/logo.svg"
 import "./Cadastro.css"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Cadastro = () => {
 
-    const[nome, setNome] = useState("");
+    const[name, setName] = useState("");
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    function handleSubmit(){
 
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+
+        try{
+            const response = await axios.post("http://localhost:8080/usuarios",{
+                name,
+                email,
+                password
+            })
+            console.log("Usuário cadastrado com sucesso:", response.data);
+            navigate("/");
+        }catch(error){
+            console.log("Erro ao cadastrar usuário: ", error.response?.data || error.message);
+        }
     }
 
     return(
@@ -23,10 +39,10 @@ const Cadastro = () => {
           <label>Nome:</label>
           <input
             type="text"
-            value={nome}
-            onChange={(e) => setEmail(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
-            placeholder='example@email.com'
+            placeholder='Digite seu nome'
           />
         </div>
         <div className='input-email'>
@@ -51,7 +67,9 @@ const Cadastro = () => {
         </div>
         <div className="buttons">
         <button type="submit">Cadastrar</button>
-        
+          <p>
+            Já tem uma conta? <Link to="/">Faça login</Link>
+          </p>
         </div>
       </form>
     </div>
