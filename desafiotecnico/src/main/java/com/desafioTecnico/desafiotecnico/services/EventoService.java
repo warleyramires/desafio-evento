@@ -32,6 +32,7 @@ public class EventoService {
            Usuario usuario = usuarioOptional.get();
 
            Evento newEvento = new Evento();
+           evento.setNome(evento.getNome());
            evento.setDescricao(evento.getDescricao());
            evento.setHoraIncio(evento.getHoraIncio());
            evento.setHoraFim(evento.getHoraFim());
@@ -81,6 +82,7 @@ public class EventoService {
                 throw new RuntimeException("Este evento não pertence ao usuário especificado.");
             }
 
+            evento.setNome(eventoEditado.getNome());
             evento.setDescricao(eventoEditado.getDescricao());
             evento.setHoraIncio(eventoEditado.getHoraIncio());
             evento.setHoraFim(eventoEditado.getHoraFim());

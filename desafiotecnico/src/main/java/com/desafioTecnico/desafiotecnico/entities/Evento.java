@@ -14,6 +14,7 @@ public class Evento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nome;
     private String descricao;
     private LocalDateTime horaIncio;
     private LocalDateTime horaFim;
