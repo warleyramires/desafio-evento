@@ -16,7 +16,7 @@ public class Evento {
 
     private String nome;
     private String descricao;
-    private LocalDateTime horaIncio;
+    private LocalDateTime horaInicio;
     private LocalDateTime horaFim;
 
     @ManyToOne

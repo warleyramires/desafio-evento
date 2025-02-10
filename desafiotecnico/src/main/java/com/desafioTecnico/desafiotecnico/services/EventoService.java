@@ -34,7 +34,7 @@ public class EventoService {
            Evento newEvento = new Evento();
            evento.setNome(evento.getNome());
            evento.setDescricao(evento.getDescricao());
-           evento.setHoraIncio(evento.getHoraIncio());
+           evento.setHoraInicio(evento.getHoraInicio());
            evento.setHoraFim(evento.getHoraFim());
            evento.setUsuario(usuario);
 
@@ -84,7 +84,7 @@ public class EventoService {
 
             evento.setNome(eventoEditado.getNome());
             evento.setDescricao(eventoEditado.getDescricao());
-            evento.setHoraIncio(eventoEditado.getHoraIncio());
+            evento.setHoraInicio(eventoEditado.getHoraInicio());
             evento.setHoraFim(eventoEditado.getHoraFim());
 
             eventoRepository.save(evento);
