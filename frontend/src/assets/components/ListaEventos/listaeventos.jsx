@@ -7,38 +7,47 @@ import { useUser } from "../../context/UserContext";
 const ListaEventos = () => {
   const [eventos, setEventos] = useState([]);
   const { user } = useUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventoToDelete, setEventoToDelete] = useState(null);
 
   useEffect(() => {
     const fetchEventos = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/eventos/usuario/${user.id}`
-        );
+        if (!user || !user.id) return;
+        const response = await axios.get(`http://localhost:8080/eventos/usuario/${user.id}`);
         setEventos(response.data);
       } catch (error) {
         console.error("Erro ao buscar eventos:", error);
       }
     };
 
-    if (user && user.id) {
-      fetchEventos();
-    }
+    fetchEventos();
   }, [user]);
 
-  const handleDelete = async (eventoId) => {
-    if (!window.confirm("Tem certeza que deseja excluir este evento?")) return;
+ 
+  const openModal = (eventoId) => {
+    setEventoToDelete(eventoId);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEventoToDelete(null);
+  };
+
+  const handleDelete = async () => {
+    if (!eventoToDelete) return;
 
     try {
-      const response = await axios.delete(`http://localhost:8080/eventos/${eventoId}/usuario/${user.id}`);
+      const response = await axios.delete(`http://localhost:8080/eventos/${eventoToDelete}/usuario/${user.id}`);
 
       if (response.status === 200) {
-        alert("Evento excluído com sucesso!");
-        // Atualiza a lista de eventos, removendo o evento deletado
-        setEventos((prevEventos) => prevEventos.filter(evento => evento.id !== eventoId));
+        setEventos((prevEventos) => prevEventos.filter(evento => evento.id !== eventoToDelete));
       }
     } catch (error) {
       console.error("Erro ao excluir evento:", error);
-      alert("Erro ao excluir evento. Tente novamente.");
+    } finally {
+      closeModal();
     }
   };
 
@@ -59,21 +68,14 @@ const ListaEventos = () => {
               <div className="info-dates">
                 <p>{new Date(evento.horaInicio).toLocaleDateString()}</p>
                 <p>
-                  {new Date(evento.horaInicio).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}{" "}
-                  -{" "}
-                  {new Date(evento.horaFim).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {new Date(evento.horaInicio).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} -{" "}
+                  {new Date(evento.horaFim).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </p>
                 <div className="evento-actions">
                   <button className="edit-btn">
                     <FaEdit /> Editar
                   </button>
-                  <button className="delete-btn" onClick={()=> handleDelete(evento.id)}>
+                  <button className="delete-btn" onClick={() => openModal(evento.id)}>
                     <FaTrash /> Excluir
                   </button>
                 </div>
@@ -82,6 +84,19 @@ const ListaEventos = () => {
           ))
         )}
       </div>
+      
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Confirmar Exclusão</h2>
+            <p>Tem certeza que deseja excluir este evento? Essa ação não pode ser desfeita.</p>
+            <div className="modal-actions">
+              <button className="cancel-btn" onClick={closeModal}>Cancelar</button>
+              <button className="confirm-btn" onClick={handleDelete}>Excluir</button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

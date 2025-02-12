@@ -23,7 +23,7 @@ const Home = () => {
           <div className="user-info">
             {user ? (
               <>
-                <span>Bem-vindo, {user?.nome}</span>
+                <span>Olá, {user?.nome}</span>
                 <a href="#" onClick={handleLogout}>
                   Sair
                 </a>
