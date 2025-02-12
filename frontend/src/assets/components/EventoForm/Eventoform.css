@@ -1,0 +1,98 @@
+.evento-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 550px;
+  margin: 20px auto;
+}
+
+.evento-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evento-form form label{
+  color: #719cd1;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.evento-form input,
+.evento-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.evento-form textarea {
+  resize: none;
+  height: 120px;
+}
+
+.evento-form button {
+  background-color: #719cd1;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.evento-form button:hover {
+  background-color: #5a7eb4;
+}
+
+.react-calendar {
+  background-color: #fff;
+  border: 1px solid #719cd1;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  padding: 3px;
+}
+
+.react-calendar__tile--active {
+  background-color: #5a7eb4;
+  color: white;
+}
+
+.react-calendar button {
+  background-color: #fff;
+  color: #719cd1;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.react-calendar button:hover {
+  background-color: #5a7eb4;
+  color: white;
+}
+
+.react-calendar button:active {
+  background-color: #719cd1;
+  color: white;
+}
+
+.react-calendar__tile {
+  color: #719cd1;
+}
+
+.react-calendar__tile:enabled:hover {
+  background-color: #5a7eb4;
+  color: white;
+}
+
+.react-calendar__navigation button {
+  background-color: #719cd1;
+  color: white;
+  border-radius: 5px;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #5a7eb4;
+}

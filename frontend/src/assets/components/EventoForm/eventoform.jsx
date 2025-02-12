@@ -1,83 +1,108 @@
-import { useState } from 'react';
-import './Eventoform.css'
-import axios from 'axios';
+import { useState } from "react";
+import Calendar from "react-calendar";
+import axios from "axios";
+import "react-calendar/dist/Calendar.css";
+import "./EventoForm.css";
+import { useUser } from "../../context/UserContext";
 
+const EventoForm = () => {
+  const [date, setDate] = useState(new Date());
+  const [horaInicio, setHoraInicio] = useState("");
+  const [horaFim, setHoraFim] = useState("");
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const { user } = useUser();
 
-function EventoForm() {
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [horaInicio, setHoraInicio] = useState('');
-  const [horaFim, setHoraFim] = useState('');
-  const [mensagem, setMensagem] = useState('');
+  const formatDateTime = (date, time) => {
+    return `${date.toISOString().split("T")[0]}T${time}:00`;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const eventoData = {
+    if (!horaInicio || !horaFim || !nome || !descricao) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    const evento = {
       nome,
       descricao,
-      horaInicio: new Date(horaInicio).toISOString(),
-      horaFim: new Date(horaFim).toISOString()
+      horaInicio: formatDateTime(date, horaInicio),
+      horaFim: formatDateTime(date, horaFim),
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/eventos", eventoData);
-      console.log("Evento criado com sucesso:", response.data);
-      setMensagem("Evento criado com sucesso!");
-      setNome('');
-      setDescricao('');
-      setHoraInicio('');
-      setHoraFim('');
+      if (!user || !user.id) {
+        alert("Usuário não autenticado.");
+        return;
+      }
+
+      const response = await axios.post(
+        `http://localhost:8080/eventos/usuarios/${user.id}/evento`,
+        evento,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      if (response.status === 201) {
+        alert("Evento salvo com sucesso!");
+        setHoraInicio("");
+        setHoraFim("");
+        setNome("");
+        setDescricao("");
+      }
     } catch (error) {
-      console.error("Erro ao criar evento:", error.response?.data || error.message);
-      setMensagem("Erro ao criar evento. Tente novamente.");
+      console.error("Erro ao salvar evento:", error);
+      alert("Erro ao salvar o evento. Tente novamente.");
     }
   };
 
   return (
-    <div className="event-form">
-      <h2>Criar Novo Evento</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome:</label>
+    <div className="box-form">
+      <h2 className="title-text">Adicionar Evento</h2>
+
+      <div className="evento-form">
+        <Calendar onChange={setDate} value={date} />
+
+        <form onSubmit={handleSubmit}>
+          <label>Hora Início:</label>
           <input
-            type="text"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Descrição:</label>
-          <textarea
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Hora de Início:</label>
-          <input
-            type="datetime-local"
+            type="time"
             value={horaInicio}
             onChange={(e) => setHoraInicio(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label>Hora de Fim:</label>
+
+          <label>Hora Fim:</label>
           <input
-            type="datetime-local"
+            type="time"
             value={horaFim}
             onChange={(e) => setHoraFim(e.target.value)}
             required
           />
-        </div>
-        <button type="submit">Criar Evento</button>
-      </form>
-      {mensagem && <p>{mensagem}</p>}
+
+          <label>Nome do Evento:</label>
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Ex: Reunião, Treinamento..."
+            required
+          />
+
+          <label>Descrição:</label>
+          <textarea
+            value={descricao}
+            onChange={(e) => setDescricao(e.target.value)}
+            placeholder="Detalhes do evento..."
+            required
+          />
+
+          <button type="submit">Salvar Evento</button>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default EventoForm;
