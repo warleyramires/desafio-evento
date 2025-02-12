@@ -5,11 +5,10 @@ import "./ListaEventos.css";
 import { useUser } from "../../context/UserContext";
 
 const ListaEventos = () => {
-  const { user, eventos: eventosContext, setEventos: setEventosContext } = useUser();
+  const { user, eventos: eventosContext, setEventos: setEventosContext, setEventoEditando } = useUser();
   const [eventos, setEventos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventoToDelete, setEventoToDelete] = useState(null);
-
 
   useEffect(() => {
     if (eventosContext.length > 0) {
@@ -30,7 +29,6 @@ const ListaEventos = () => {
     }
   };
 
- 
   const openModal = (eventoId) => {
     setEventoToDelete(eventoId);
     setIsModalOpen(true);
@@ -57,13 +55,17 @@ const ListaEventos = () => {
     }
   };
 
+  const handleEdit = (evento) => {
+    setEventoEditando(evento);
+  };
+
   return (
     <section>
       <h1 className="title-text">Meus Eventos</h1>
 
       <div className="eventos-content">
         {eventos.length === 0 ? (
-          <p>Nenhum evento encontrado.</p>
+          <p>Você não possui eventos.</p>
         ) : (
           eventos.map((evento) => (
             <div key={evento.id} className="evento-item">
@@ -78,7 +80,7 @@ const ListaEventos = () => {
                   {new Date(evento.horaFim).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </p>
                 <div className="evento-actions">
-                  <button className="edit-btn">
+                  <button className="edit-btn" onClick={() => handleEdit(evento)}>
                     <FaEdit /> Editar
                   </button>
                   <button className="delete-btn" onClick={() => openModal(evento.id)}>

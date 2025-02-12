@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import axios from "axios";
 import "react-calendar/dist/Calendar.css";
@@ -11,7 +11,17 @@ const EventoForm = () => {
   const [horaFim, setHoraFim] = useState("");
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const { user, setEventos } = useUser();
+  const { user, setEventos, eventoEditando, setEventoEditando } = useUser();
+
+  useEffect(() => {
+    if (eventoEditando) {
+      setDate(new Date(eventoEditando.horaInicio));
+      setHoraInicio(eventoEditando.horaInicio.split("T")[1].slice(0, 5));  // Pega apenas a hora
+      setHoraFim(eventoEditando.horaFim.split("T")[1].slice(0, 5));  // Pega apenas a hora
+      setNome(eventoEditando.nome);
+      setDescricao(eventoEditando.descricao);
+    }
+  }, [eventoEditando]);
 
   const formatDateTime = (date, time) => {
     return `${date.toISOString().split("T")[0]}T${time}:00`;
@@ -38,21 +48,45 @@ const EventoForm = () => {
         return;
       }
 
-      const response = await axios.post(
-        `http://localhost:8080/eventos/usuarios/${user.id}/evento`,
-        evento,
-        { headers: { "Content-Type": "application/json" } }
-      );
+      let response;
+      if (eventoEditando) {
+        
+        response = await axios.put(
+          `http://localhost:8080/eventos/${eventoEditando.id}/usuario/${user.id}`,
+          evento,
+          { headers: { "Content-Type": "application/json" } }
+        );
+      } else {
+        
+        response = await axios.post(
+          `http://localhost:8080/eventos/usuarios/${user.id}/evento`,
+          evento,
+          { headers: { "Content-Type": "application/json" } }
+        );
+      }
 
-      if (response.status === 201) {
-        alert("Evento salvo com sucesso!");
+      if (response.status === 200 || response.status === 201) {
+        alert(eventoEditando ? "Evento atualizado com sucesso!" : "Evento salvo com sucesso!");
 
-        setEventos((prevEvent)=> [...prevEvent, response.data])
+        setEventos((prevEventos) => {
+          if (eventoEditando) {
+            return prevEventos.map((eventoItem) =>
+              eventoItem.id === eventoEditando.id ? response.data : eventoItem
+            );
+          } else {
+            return [...prevEventos, response.data];
+          }
+        });
 
         setHoraInicio("");
         setHoraFim("");
         setNome("");
         setDescricao("");
+        setDate(new Date());
+
+        if (eventoEditando) {
+          setEventoEditando(null);
+        }
       }
     } catch (error) {
       console.error("Erro ao salvar evento:", error);
@@ -62,7 +96,7 @@ const EventoForm = () => {
 
   return (
     <div className="box-form">
-      <h2 className="title-text">Adicionar Evento</h2>
+      <h2 className="title-text">{eventoEditando ? "Editar Evento" : "Adicionar Evento"}</h2>
 
       <div className="evento-form">
         <Calendar onChange={setDate} value={date} />
@@ -101,7 +135,7 @@ const EventoForm = () => {
             required
           />
 
-          <button type="submit">Salvar Evento</button>
+          <button type="submit">{eventoEditando ? "Atualizar Evento" : "Salvar Evento"}</button>
         </form>
       </div>
     </div>

@@ -56,7 +56,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
   width: 100%;
-  border: 1px solid green;
+  border: 2px solid #72aaf0;
+}
+
+@media(max-width: 1199px){
+  .main-content{
+    flex-wrap: wrap-reverse;
+  }
 }
 
 @media (max-width: 768px) {

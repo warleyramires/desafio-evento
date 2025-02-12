@@ -4,6 +4,12 @@
   margin-bottom: 30px;
 }
 
+.sem-eventos{
+  font-size: 24px;
+  background-color: transparent;
+  color: #434142;
+}
+
 .evento-item {
   background: #fff;
   padding: 15px;
