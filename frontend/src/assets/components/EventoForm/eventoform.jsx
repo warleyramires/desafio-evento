@@ -11,7 +11,7 @@ const EventoForm = () => {
   const [horaFim, setHoraFim] = useState("");
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const { user } = useUser();
+  const { user, setEventos } = useUser();
 
   const formatDateTime = (date, time) => {
     return `${date.toISOString().split("T")[0]}T${time}:00`;
@@ -46,6 +46,9 @@ const EventoForm = () => {
 
       if (response.status === 201) {
         alert("Evento salvo com sucesso!");
+
+        setEventos((prevEvent)=> [...prevEvent, response.data])
+
         setHoraInicio("");
         setHoraFim("");
         setNome("");

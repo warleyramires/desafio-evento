@@ -5,24 +5,30 @@ import "./ListaEventos.css";
 import { useUser } from "../../context/UserContext";
 
 const ListaEventos = () => {
+  const { user, eventos: eventosContext, setEventos: setEventosContext } = useUser();
   const [eventos, setEventos] = useState([]);
-  const { user } = useUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventoToDelete, setEventoToDelete] = useState(null);
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        if (!user || !user.id) return;
-        const response = await axios.get(`http://localhost:8080/eventos/usuario/${user.id}`);
-        setEventos(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar eventos:", error);
-      }
-    };
 
-    fetchEventos();
-  }, [user]);
+  useEffect(() => {
+    if (eventosContext.length > 0) {
+      setEventos(eventosContext);
+    } else {
+      fetchEventos();
+    }
+  }, [eventosContext]);
+
+  const fetchEventos = async () => {
+    try {
+      if (!user || !user.id) return;
+      const response = await axios.get(`http://localhost:8080/eventos/usuario/${user.id}`);
+      setEventos(response.data);
+      setEventosContext(response.data); 
+    } catch (error) {
+      console.error("Erro ao buscar eventos:", error);
+    }
+  };
 
  
   const openModal = (eventoId) => {
@@ -84,7 +90,7 @@ const ListaEventos = () => {
           ))
         )}
       </div>
-      
+
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
