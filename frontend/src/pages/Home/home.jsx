@@ -23,6 +23,7 @@ const Home = () => {
           <div className="user-info">
             {user ? (
               <>
+                <button className="btn-eventos" onClick={()=> navigate("/eventos")}>Eventos da Galera</button>
                 <span>Olá, {user?.nome}</span>
                 <a href="#" onClick={handleLogout}>
                   Sair
