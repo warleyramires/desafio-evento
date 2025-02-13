@@ -22,6 +22,10 @@
   gap: 10px;
 }
 
+.eventos-content{
+  width: 650px;
+ }
+
 .evento-actions {
   display: flex;
   justify-content: flex-end;
@@ -61,7 +65,6 @@
   color: white;
 }
 
-/* Estilização do Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
