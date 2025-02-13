@@ -1,0 +1,117 @@
+.eventos-gerais-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.eventos-gerais-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: #6f97c7ad;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 48%;
+  max-width: 350px;
+  height: 350px;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+
+.eventos-gerais-item:hover {
+  transform: scale(1.02);
+}
+
+.eventos-gerais-date {
+  background-color: #434142;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 80px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  margin-right: 16px;
+  margin-bottom: 50px;
+}
+
+.eventos-gerais-day {
+  font-size: 38px;
+  margin-bottom: 4px;
+  line-height: 30px;
+}
+
+.eventos-gerais-month-year {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.eventos-gerais-info {
+  flex: 1;
+  text-align: left;
+  width: 100%;
+}
+
+.eventos-gerais-info h3 {
+  margin-bottom: 12px;
+  font-size: 28px;
+  color: white;
+  background-color: #9bb6d7;
+}
+
+.eventos-gerais-horario {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: white;
+    background-color: #9bb6d7;
+    padding: 5px;
+    border-radius: 5px;
+    gap: 8px;
+}
+
+.icone-relogio {
+    font-size: 18px;
+    color: white;
+}
+
+.eventos-gerais-info p {
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: white;
+    background-color: #9bb6d7;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.eventos-gerais-info strong {
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .eventos-gerais-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .eventos-gerais-item {
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+  }
+}

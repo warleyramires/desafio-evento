@@ -2,6 +2,7 @@ import LogoToken from "../../assets/image/logo.svg";
 import "./Eventos.css";
 import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import EventosGerais from "../../components/EventosGerais/eventosgerais";
 
 const Eventos = () => {
   const navigate = useNavigate();
@@ -38,7 +39,9 @@ const Eventos = () => {
           </div>
         </header>
 
-        <main className="main-content"></main>
+        <main className="main-content">
+            <EventosGerais/>
+        </main>
       </div>
     </div>
   );
