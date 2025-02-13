@@ -11,13 +11,15 @@ const EventoForm = () => {
   const [horaFim, setHoraFim] = useState("");
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [erroData, setErroData] = useState("");
+  const [erroHorario, setErroHorario] = useState("");
   const { user, setEventos, eventoEditando, setEventoEditando } = useUser();
 
   useEffect(() => {
     if (eventoEditando) {
       setDate(new Date(eventoEditando.horaInicio));
-      setHoraInicio(eventoEditando.horaInicio.split("T")[1].slice(0, 5));  // Pega apenas a hora
-      setHoraFim(eventoEditando.horaFim.split("T")[1].slice(0, 5));  // Pega apenas a hora
+      setHoraInicio(eventoEditando.horaInicio.split("T")[1].slice(0, 5)); // Pega apenas a hora
+      setHoraFim(eventoEditando.horaFim.split("T")[1].slice(0, 5)); // Pega apenas a hora
       setNome(eventoEditando.nome);
       setDescricao(eventoEditando.descricao);
     }
@@ -29,6 +31,29 @@ const EventoForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Verificação de data futura
+    const hoje = new Date();
+    if (date < hoje.setHours(0, 0, 0, 0)) {
+      setErroData("A data do evento não pode ser anterior ao dia atual.");
+      return;
+    } else {
+      setErroData("");
+    }
+
+    // Verificação de horários lógicos
+    const [horaInicioHora, horaInicioMinuto] = horaInicio.split(":").map(Number);
+    const [horaFimHora, horaFimMinuto] = horaFim.split(":").map(Number);
+
+    if (
+      horaInicioHora > horaFimHora ||
+      (horaInicioHora === horaFimHora && horaInicioMinuto >= horaFimMinuto)
+    ) {
+      setErroHorario("O horário de início não pode ser posterior ao horário de fim.");
+      return;
+    } else {
+      setErroHorario("");
+    }
 
     if (!horaInicio || !horaFim || !nome || !descricao) {
       alert("Preencha todos os campos!");
@@ -50,14 +75,12 @@ const EventoForm = () => {
 
       let response;
       if (eventoEditando) {
-        
         response = await axios.put(
           `http://localhost:8080/eventos/${eventoEditando.id}/usuario/${user.id}`,
           evento,
           { headers: { "Content-Type": "application/json" } }
         );
       } else {
-        
         response = await axios.post(
           `http://localhost:8080/eventos/usuarios/${user.id}/evento`,
           evento,
@@ -109,6 +132,7 @@ const EventoForm = () => {
             onChange={(e) => setHoraInicio(e.target.value)}
             required
           />
+          {erroHorario && <p className="erro">{erroHorario}</p>}
 
           <label>Hora Fim:</label>
           <input
@@ -117,6 +141,7 @@ const EventoForm = () => {
             onChange={(e) => setHoraFim(e.target.value)}
             required
           />
+          {erroHorario && <p className="erro">{erroHorario}</p>}
 
           <label>Nome do Evento:</label>
           <input
@@ -134,6 +159,8 @@ const EventoForm = () => {
             placeholder="Detalhes do evento..."
             required
           />
+
+          {erroData && <p className="erro">{erroData}</p>}
 
           <button type="submit">{eventoEditando ? "Atualizar Evento" : "Salvar Evento"}</button>
         </form>

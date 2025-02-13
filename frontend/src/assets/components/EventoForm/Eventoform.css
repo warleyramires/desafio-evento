@@ -46,6 +46,12 @@
   background-color: #5a7eb4;
 }
 
+.erro {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
 .react-calendar {
   background-color: #fff;
   border: 1px solid #719cd1;
