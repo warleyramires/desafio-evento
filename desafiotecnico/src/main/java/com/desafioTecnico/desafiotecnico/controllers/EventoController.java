@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/eventos")
@@ -53,6 +54,16 @@ public class EventoController {
             return ResponseEntity.status(HttpStatus.OK).body("");
         }catch (Exception e){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAllEventos(){
+        try{
+            Optional<List<Evento>> eventos = eventoService.findAllEvents();
+            return ResponseEntity.status(HttpStatus.OK).body(eventos);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: "+ e.getMessage());
         }
     }
 }

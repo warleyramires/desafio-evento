@@ -6,7 +6,6 @@ import com.desafioTecnico.desafiotecnico.repositories.EventoRepository;
 import com.desafioTecnico.desafiotecnico.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -116,6 +115,19 @@ public class EventoService {
 
         }catch (Exception e){
             throw new RuntimeException("Erro ao deletar evento: " + e.getMessage());
+        }
+    }
+
+    public Optional<List<Evento>> findAllEvents(){
+        try{
+            Optional<List<Evento>> optionalListEventos = Optional.of(eventoRepository.findAll());
+
+            if(optionalListEventos.isEmpty()){
+                throw new RuntimeException("Não há eventos");
+            }
+            return optionalListEventos;
+        }catch (Exception e){
+            throw new RuntimeException("Erro ao buscar por eventos");
         }
     }
 
