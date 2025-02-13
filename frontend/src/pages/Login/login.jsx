@@ -1,10 +1,9 @@
 import { useState } from "react";
-import "./Login.css";
-import Logo from "../../assets/image/logo.svg";
+import LogoToken from "../../assets/image/logo.svg"
+import "./Login.css"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUser } from "../../assets/context/UserContext";
-
+import { useUser } from "../../context/UserContext";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,7 +51,7 @@ function Login() {
   return (
     <main className="page-login">
       <div className="login-container">
-        <img src={Logo} alt="Logo TokenWeb" className="image-logo" />
+        <img src={LogoToken} alt="Logo TokenWeb" className="image-logo" />
         <form className="formulario" onSubmit={handleSubmit}>
           <div className="input-email">
             <label>Email:</label>

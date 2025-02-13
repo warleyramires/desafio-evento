@@ -65,7 +65,7 @@ const ListaEventos = () => {
 
       <div className="eventos-content">
         {eventos.length === 0 ? (
-          <p>Você não possui eventos.</p>
+          <p className="sem-eventos">Você não possui eventos.</p>
         ) : (
           eventos.map((evento) => (
             <div key={evento.id} className="evento-item">

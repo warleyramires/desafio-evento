@@ -1,9 +1,9 @@
-import Logo from "../../assets/image/logo.svg";
-import "./Home.css";
-import EventoForm from "../../assets/components/EventoForm/eventoform";
-import ListaEventos from "../../assets/components/ListaEventos/listaeventos";
-import { useUser } from "../../assets/context/UserContext";
-import { useNavigate } from "react-router-dom";
+import LogoToken from "../../assets/image/logo.svg"
+import "./Home.css"
+import EventoForm from "../../components/EventoForm/eventoform"
+import ListaEventos from "../../components/ListaEventos/listaeventos"
+import { useUser } from "../../context/UserContext"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
   const { user, setUser } = useUser();
@@ -18,7 +18,7 @@ const Home = () => {
     <div className="page-home">
       <div className="width-page">
         <header className="header">
-          <img src={Logo} alt="Logo TokenWeb" className="image-logo" />
+          <img src={LogoToken} alt="Logo TokenWeb" className="image-logo" />
 
           <div className="user-info">
             {user ? (
