@@ -64,7 +64,7 @@ cd desafio-evento
 
 ```bash
 cd desafiotecnico
-mvn spring-boot:run &
+mvn spring-boot:run
 ```
 
 # Voltar para a raiz e iniciar o frontend
