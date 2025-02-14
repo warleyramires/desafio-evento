@@ -16,6 +16,11 @@
   flex-direction: column;
 }
 
+.image-logo-eventos {
+  width: 250px;
+  max-width: 30%;
+  height: auto;
+}
 .header {
   padding-block: 10px;
   border-bottom: 2px solid #434142;
@@ -72,14 +77,14 @@
 }
 
 @media (max-width: 768px) {
-  .image-logo {
+  .image-logo-eventos {
     width: 100px;
     max-width: 40%;
   }
 }
 
 @media (max-width: 480px) {
-  .image-logo {
+  .image-logo-eventos {
     max-width: 80%;
   }
 }

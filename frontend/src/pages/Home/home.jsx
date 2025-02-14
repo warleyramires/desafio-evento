@@ -18,7 +18,7 @@ const Home = () => {
     <div className="page-home">
       <div className="width-page">
         <header className="header">
-          <img src={LogoToken} alt="Logo TokenWeb" className="image-logo" />
+          <img src={LogoToken} alt="Logo TokenWeb" className="image-logo-home" />
 
           <div className="user-info">
             {user ? (

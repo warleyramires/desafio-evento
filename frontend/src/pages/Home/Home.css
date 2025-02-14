@@ -55,9 +55,9 @@
 }
 
 
-.image-logo {
-  width: 120px;
-  max-width: 20%;
+.image-logo-home {
+  width: 250px;
+  max-width: 30%;
   height: auto;
 }
 
@@ -82,14 +82,14 @@
 }
 
 @media (max-width: 768px) {
-  .image-logo {
+  .image-logo-home {
     width: 100px;
     max-width: 40%;
   }
 }
 
 @media (max-width: 480px) {
-  .image-logo {
+  .image-logo-home {
     max-width: 80%;
   }
 }

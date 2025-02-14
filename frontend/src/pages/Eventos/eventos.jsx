@@ -17,7 +17,7 @@ const Eventos = () => {
     <div className="page-eventos">
       <div className="width-page">
         <header className="header">
-          <img src={LogoToken} alt="Logo TokenWeb" className="image-logo" />
+          <img src={LogoToken} alt="Logo TokenWeb" className="image-logo-eventos" />
 
           <div className="user-info">
             {user ? (

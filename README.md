@@ -10,7 +10,7 @@ O desafio consiste em desenvolver um sistema web de calendário de eventos com b
 - **Adição de eventos**
 - **Edição de eventos**
 - **Remoção de eventos**
-- **Listagem de eventos**
+- **Listagem de eventossd**
 
 ## 📁 Estrutura do Projeto
 
